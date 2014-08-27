@@ -70,7 +70,6 @@ var Class			= require('class')
   , util			= require('util')
 
 var c = Class.inherit({
-	asd:function(){}
 }
 // name of class, first string argument
 /* debug: class.inherit
@@ -84,7 +83,7 @@ var o = c.create()
 
 [class.inherit] create class "BaseClass" at Object.<anonymous> (/node_modules/class/index.js:82:25)
 [class.inherit] create class "test class" at Object.<anonymous> (/example/program1.js:6:15)
-[class.inherit] spawn object of class "test class" at Object.<anonymous> (/example/program1.js:14:11)
+[class.inherit] spawn object of class "test class" at Object.<anonymous> (/example/program1.js:13:11)
 
 
 ```
