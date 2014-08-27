@@ -53,8 +53,8 @@ var BigClass = SomeClass.inherit({
 
 debug tags:
 
-class - enable all debug messages of class module
-class.inherit - enable inheritance and make instance of class debug info
+#### class - enable all debug messages of class module
+#### class.inherit - enable inheritance and make instance of class debug info
 
 ```javascript
 
