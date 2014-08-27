@@ -67,7 +67,6 @@ file: program1.js
 'use strict'
 
 var Class			= require('class')
-  , util			= require('util')
 
 var c = Class.inherit({
 }
@@ -82,8 +81,8 @@ var o = c.create()
 // output
 
 [class.inherit] create class "BaseClass" at Object.<anonymous> (/node_modules/class/index.js:82:25)
-[class.inherit] create class "test class" at Object.<anonymous> (/example/program1.js:6:15)
-[class.inherit] spawn object of class "test class" at Object.<anonymous> (/example/program1.js:13:11)
+[class.inherit] create class "test class" at Object.<anonymous> (/example/program1.js:5:15)
+[class.inherit] spawn object of class "test class" at Object.<anonymous> (/example/program1.js:12:11)
 
 
 ```
