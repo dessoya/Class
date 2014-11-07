@@ -3,6 +3,8 @@
 /* uses: smart-require
 */
 
+var util = require('util')
+
 var Class = function(){}
 
 Class.prototype = {
@@ -63,6 +65,36 @@ Class.prototype = {
 
 	constructor: function(object) {
 		return this.prototype.onCreate.bind(object)
+	},
+
+	super: function(name) {
+		var args = Array.prototype.slice.call(arguments)
+		args.shift()
+
+		this._super(name, args, [])
+	},
+
+	_super: function(name, args, e) {
+
+		if(name in this) {
+			if(e.indexOf(this[name]) === -1) {
+				e.push(this[name])
+				this[name].apply(this, args)
+			}
+		}
+
+		var p = this.parents
+
+		for(var i = 0, l = p.length; i < l; i++) {
+			var item = p[i]
+			if(name in item) {
+				if(e.indexOf(item[name]) === -1) {
+					e.push(item[name])
+					item[name].apply(this, args)
+				}
+			}
+			item._super(name, args, e)
+		}
 	},
 
 	create: function() {

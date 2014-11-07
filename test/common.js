@@ -114,4 +114,45 @@ describe('Module class', function(){
 
 		done();
 	})
+
+    it('super', function(done) {
+
+		var C = Class.inherit({
+			m: function(a) {
+				a['c.m'] = true
+			}
+		})
+
+		var C1 = Class.inherit({
+			m: function(a) {
+				a['c1.m'] = true
+			}
+		})
+
+		var D = C.inherit({
+			m: function(a) {
+				a['d.m'] = true
+			}
+		}, C1)
+
+		var D1 = C.inherit({
+			m: function(a) {
+				a['d1.m'] = true
+			}
+		}, C1)
+
+		var E = D.inherit({
+			m: function(a) {
+				a['e.m'] = true
+			}
+		}, D1)
+
+		var c = E.create(), a = {}
+		c.super('m', a)
+
+		assert.deepEqual(a, { 'e.m': true, 'd.m': true, 'c.m': true, 'c1.m': true, 'd1.m': true }, 'check')
+
+		done()
+	})
+
 })
