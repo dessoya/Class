@@ -7,6 +7,7 @@ var assert = require('assert')
 
 describe('Module class', function(){
 
+
   it('common functionality', function(done){
 
 		assert.equal(typeof Class, 'function', 'Class type check');
@@ -119,40 +120,94 @@ describe('Module class', function(){
 
 		var C = Class.inherit({
 			m: function(a) {
-				a['c.m'] = true
+				a['c.m'] = this.b
 			}
 		})
 
 		var C1 = Class.inherit({
 			m: function(a) {
-				a['c1.m'] = true
+				a['c1.m'] = this.b
 			}
 		})
 
 		var D = C.inherit({
 			m: function(a) {
-				a['d.m'] = true
+				a['d.m'] = this.b
 			}
 		}, C1)
 
 		var D1 = C.inherit({
 			m: function(a) {
-				a['d1.m'] = true
+				a['d1.m'] = this.b
 			}
 		}, C1)
 
 		var E = D.inherit({
+		    
+		    onCreate: function() {
+		    	this.b = 123
+		    },
+
 			m: function(a) {
-				a['e.m'] = true
+				a['e.m'] = this.b
 			}
 		}, D1)
 
 		var c = E.create(), a = {}
 		c.super('m', a)
 
-		assert.deepEqual(a, { 'e.m': true, 'd.m': true, 'c.m': true, 'c1.m': true, 'd1.m': true }, 'check')
+		assert.deepEqual(a, { 'e.m': 123, 'd.m': 123, 'c.m': 123, 'c1.m': 123, 'd1.m': 123 }, 'check')
 
 		done()
 	})
+
+  it('multi inherit constructor miss', function(done){
+  
+        // console.log('c------')
+
+		var C = Class.inherit({
+			// name: 'C',
+			onCreate: function() {
+				this.n = 'C'
+			}
+		})
+
+		var o1 = C.create()
+		//console.log(util.inspect(C.prototype,{depth:null,showHidden:true}))
+
+        // console.log('b------')
+		var B = C.inherit({
+			onCreate: function() {
+				this.n = 'B'
+			}
+		})
+
+		var o2 = B.create()
+        //console.log('d------')
+
+		var D = C.inherit({
+		})
+
+		//console.log(util.inspect(D,{depth:null,showHidden:true}))
+
+
+		var o3 = D.create()
+
+        // console.log('s------')
+		var S = D.inherit({
+		}, B)
+
+		// console.log(util.inspect(S,{depth:null,showHidden:true}))
+
+		var o4 = S.create()
+
+		assert.equal(o1.n, 'C', 'check 1')
+		assert.equal(o2.n, 'B', 'check 2')
+		assert.equal(o3.n, 'C', 'check 3')
+		assert.equal(o4.n, 'C', 'check 4')
+
+		done()
+	})
+
 
 })
