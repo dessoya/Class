@@ -3,8 +3,10 @@
 /* uses: smart-require
 */
 
-var util		= require('util')
-  , fs			= require('fs')
+if(typeof module !== 'undefined') {
+	var util		= require('util')
+	  , fs			= require('fs')
+}
 
 var Class = function(){}
 
@@ -159,4 +161,6 @@ Class.loadClasses = function(path) {
 }
 */
 
-module.exports = Class
+if(typeof module !== 'undefined') {
+	module.exports = Class
+}
